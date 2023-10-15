@@ -8,7 +8,7 @@
 ## How to run:
 
 1. Ensure Docker and docker-compose are installed.
-2. Clone the repository.
+2. Clone the repository from <HERE>
 3. Navigate to the root directory.
 4. Run `docker-compose up`.
 
@@ -17,12 +17,11 @@
 2. Docker Compose
 
 ## Endpoints:
-
 Server 1 (Paragraph Analyzer): `http://localhost:5000/analyze_paragraph/`
 Server 2 (Sentence Analyzer): `http://localhost:5001/`
 
 Post a request with the body {"text": "Your text here"}.
 
 ## Testing:
-Run `python -m unittest discover`.
+Run ` python ./test_service.py`.
 

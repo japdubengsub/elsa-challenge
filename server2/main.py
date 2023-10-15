@@ -12,6 +12,10 @@ class Input(BaseModel):
 
 
 @app.post("/")
-def get_sentiment(data: Input):
+async def get_sentiment(data: Input):
     result = classifier(data.text)[0]
-    return {"label": result["label"], "score": result["score"]}
+
+    return {
+        "label": result["label"],
+        "score": result["score"]
+    }
