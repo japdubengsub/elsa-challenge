@@ -8,7 +8,7 @@
 ## How to run:
 
 1. Ensure Docker and docker-compose are installed.
-2. Clone the repository from <HERE>
+2. Clone the repository from `https://github.com/japdubengsub/elsa-challenge`
 3. Navigate to the root directory.
 4. Run `docker-compose up`.
 
@@ -16,12 +16,13 @@
 1. Docker
 2. Docker Compose
 
-## Endpoints:
-Server 1 (Paragraph Analyzer): `http://localhost:5000/analyze_paragraph/`
-Server 2 (Sentence Analyzer): `http://localhost:5001/`
+## Public endpoints:
+Server 1 (Paragraph Analyzer): `http://localhost:5000/analyze_paragraph/`.
+Server 1 (Sentence Analyzer - proxy version): `http://localhost:5000/analyze_sentence/`.
+Server 2 (Sentence Analyzer - direct connection): `http://localhost:5001/`.
 
-Post a request with the body {"text": "Your text here"}.
+Post a request with the body `{"text": "Your text here"}`.
 
 ## Testing:
-Run ` python ./test_service.py`.
+Run ` python ./test_service.py`. while `docker-compose up` is running.
 

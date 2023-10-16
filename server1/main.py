@@ -1,16 +1,10 @@
 import httpx
 import spacy
-# import requests
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-
 ML_SERVER_URL = "http://server2:80/"
-# ML_SERVER_URL = "http://server2:5001/"
-# ML_SERVER_URL = "http://localhost:5001/"
-# ML_SERVER_URL = "http://localhost:80/"
-
 
 app = FastAPI()
 
@@ -22,13 +16,8 @@ class Input(BaseModel):
 
 
 async def get_sentiment(text: str):
-    # response = requests.post("http://server2", json={"text": text})
     async with httpx.AsyncClient() as client:
-        try:
-            response = await client.post(url=ML_SERVER_URL, json={"text": text})
-            # response = await client.post(url=ML_SERVER_URL, data={"text": text})
-        except Exception as e:
-            print(e)
+        response = await client.post(url=ML_SERVER_URL, json={"text": text})
 
     return response.json()
 
@@ -51,8 +40,5 @@ async def analyze_paragraph(data: Input):
 
 @app.post("/analyze_sentence/")
 async def analyze_sentence(data: Input):
-    # async with httpx.AsyncClient() as client:
-    #     response = await client.post(ML_SERVER_URL, json={"text": text})
     response = await get_sentiment(data.text)
     return response
-

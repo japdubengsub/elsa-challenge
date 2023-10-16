@@ -8,10 +8,9 @@ class TestServices(unittest.TestCase):
     def setUp(self):
         self.server1_host = "localhost"
         self.server1_port = 5000
-        # self.server1_port = 80
 
-        # self.server2_host = "localhost"
-        # self.server2_port = 5001
+        self.server2_host = "localhost"
+        self.server2_port = 5001
 
     def make_request(self, host, port, endpoint, data):
         headers = {'Content-Type': 'application/json'}
@@ -47,17 +46,17 @@ class TestServices(unittest.TestCase):
         self.assertEqual(response["label"], "NEGATIVE")
         self.assertTrue(0.5 < response["score"] <= 1.0)
 
-    # def test_server2_positive_sentiment(self):
-    #     data = {"text": "This is fantastic!"}
-    #     response = self.make_request(self.server2_host, self.server2_port, "/", data)
-    #     self.assertEqual(response["label"], "POSITIVE")
-    #     self.assertTrue(0.5 < response["score"] <= 1.0)
-    #
-    # def test_server2_negative_sentiment(self):
-    #     data = {"text": "This is not good at all."}
-    #     response = self.make_request(self.server2_host, self.server2_port, "/", data)
-    #     self.assertEqual(response["label"], "NEGATIVE")
-    #     self.assertTrue(0.5 < response["score"] <= 1.0)
+    def test_server2_positive_sentiment(self):
+        data = {"text": "This is fantastic!"}
+        response = self.make_request(self.server2_host, self.server2_port, "/", data)
+        self.assertEqual(response["label"], "POSITIVE")
+        self.assertTrue(0.5 < response["score"] <= 1.0)
+
+    def test_server2_negative_sentiment(self):
+        data = {"text": "This is not good at all."}
+        response = self.make_request(self.server2_host, self.server2_port, "/", data)
+        self.assertEqual(response["label"], "NEGATIVE")
+        self.assertTrue(0.5 < response["score"] <= 1.0)
 
 
 if __name__ == "__main__":
