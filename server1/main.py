@@ -1,6 +1,7 @@
+from asyncio import gather
+
 import httpx
 import spacy
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -25,17 +26,16 @@ async def get_sentiment(text: str):
 @app.post("/analyze_paragraph/")
 async def analyze_paragraph(data: Input):
     doc = nlp(data.text)
-    sentences = [sent.text for sent in doc.sents]
 
-    results = [await get_sentiment(sentence) for sentence in sentences]
+    results = await gather(*(get_sentiment(sentence.text) for sentence in doc.sents))
 
     positive_scores = sum([res["score"] for res in results if res["label"] == "POSITIVE"])
     negative_scores = sum([res["score"] for res in results if res["label"] == "NEGATIVE"])
 
     if positive_scores > negative_scores:
-        return {"label": "POSITIVE", "score": positive_scores / len(sentences)}
+        return {"label": "POSITIVE", "score": positive_scores / len(results)}
     else:
-        return {"label": "NEGATIVE", "score": negative_scores / len(sentences)}
+        return {"label": "NEGATIVE", "score": negative_scores / len(results)}
 
 
 @app.post("/analyze_sentence/")
